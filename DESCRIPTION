@@ -1,11 +1,12 @@
 Package: sottools
-Title: What the Package Does (One Line, Title Case)
+Title: Analysis Functions For Stage Of Treatment Waiting Times 
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("Angus", "Morton", , "angus.morton@phs.scot", role = c("aut", "cre"))
+Description: This package mostly contains functions to help retrieve data from the national waiting times data mart for further analysis using R. Most of the functions consist of chunks of dplyr code which is converted to SQL by dbplyr and used to query the data mart.
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
+Imports: 
+    dplyr
