@@ -2,23 +2,30 @@
 % Please edit documentation in R/get_wh_tbl.R
 \name{get_wh_tbl}
 \alias{get_wh_tbl}
-\title{Get a lazy tbl object from the warehouse}
+\title{Get a lazy_tbl object from the warehouse}
 \usage{
-get_wh_tbl(con, datatype, wh_table)
+get_wh_tbl(con, datatype = "SSM", wh_table = "ongoing")
 }
 \arguments{
-\item{con}{The database connection object}
+\item{con}{The dv_platform connection object}
 
 \item{datatype}{A character vector specifying "SSQ", "SSM" or "LIVE"}
 
-\item{wh_table}{}
+\item{wh_table}{One of "ongoing", "completed", "offers", "unavailability", "snapshot_details"}
 }
 \value{
-A lazy tbl
+A lazy_tbl object representing the warehouse table
 }
 \description{
-Get a lazy tbl object from the warehouse
+Get a lazy_tbl object from the warehouse
 }
 \examples{
+keyring::keyring_unlock(password = Sys.getenv("KEYRING_PASS"))
+
+con <- DBI::dbConnect(odbc::odbc(),
+  dsn = "DVPREPROD",
+  uid = "tunwdev01",
+  pwd = keyring::key_get("tunwdev01_pass")
+)
 test <- get_wh_tbl(con, datatype = "SSM", wh_table = "ongoing")
 }
