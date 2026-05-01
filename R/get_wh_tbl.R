@@ -1,7 +1,7 @@
 #' Get a lazy_tbl object from the warehouse
 #'
 #' @param con The dv_platform connection object
-#' @param datatype A character vector specifying "SSQ", "SSM" or "LIVE"
+#' @param datatype A character vector specifying "SSQ", "SSM" or "LIVE"clasdfasdfasdf
 #' @param wh_table One of "ongoing", "completed", "offers", "unavailability", "snapshot_details"
 #'
 #' @returns A lazy_tbl object representing the warehouse table
@@ -20,16 +20,11 @@ get_wh_tbl <- function(con,
                        datatype = "SSM",
                        wh_table = "ongoing") {
   # Parameter Validation
-  if (!inherits(con, "PostgreSQL") | con@info[1]$dbname != "dv_platform") {
+  if (!(inherits(con, "PostgreSQL") & con@info[1]$dbname == "dv_platform") &
+      !inherits(con, "SQLiteConnection")) {
     cli::cli_abort(
       "{.arg con} must be a warehouse database connection.",
       class = "wh_object_check"
-    )
-  }
-  if (missing(con)) {
-    cli::cli_abort(
-      "A warehouse database connection {.arg con} must be supplied.",
-      class = "missing_arg"
     )
   }
   if (missing(datatype) & wh_table != "snapshot_details") {
@@ -86,6 +81,6 @@ get_wh_tbl <- function(con,
     ),
     wh_table == "snapshot_details" ~ "SELECT * FROM waiting_times.snapshot_details"
   )
-  # query the database
+  # create lazy_tbl
   tbl <- dplyr::tbl(con, dplyr::sql(sql_query))
 }
