@@ -82,5 +82,6 @@ get_wh_tbl <- function(con,
     wh_table == "snapshot_details" ~ "SELECT * FROM waiting_times.snapshot_details"
   )
   # create lazy_tbl
-  tbl <- dplyr::tbl(con, dplyr::sql(sql_query))
+  tbl <- dplyr::tbl(con, dplyr::sql(sql_query)) |>
+    dplyr::mutate(wh_table = wh_table)
 }

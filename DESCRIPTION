@@ -10,10 +10,10 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Imports: 
     cli,
+    dbplyr,
     dplyr
 Suggests: 
     DBI,
-    dbplyr,
     DT,
     htmltools,
     keyring,
