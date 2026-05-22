@@ -9,7 +9,7 @@ get_wh_tbl(con, datatype = "SSM", wh_table = "ongoing")
 \arguments{
 \item{con}{The dv_platform connection object}
 
-\item{datatype}{A character vector specifying "SSQ", "SSM" or "LIVE"}
+\item{datatype}{A character vector specifying "SSQ", "SSM" or "LIVE"clasdfasdfasdf}
 
 \item{wh_table}{One of "ongoing", "completed", "offers", "unavailability", "snapshot_details"}
 }

@@ -11,7 +11,8 @@ RoxygenNote: 7.3.3
 Imports: 
     cli,
     dbplyr,
-    dplyr
+    dplyr,
+    rlang
 Suggests: 
     DBI,
     DT,

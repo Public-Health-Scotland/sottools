@@ -1,37 +1,37 @@
 f_borders_small_specs <- function(df) {
 
   df <- df |>
-    filter(provider_name != "Borders" |
-             (provider_name == "Borders" &
-                !(specialty_code %in% c("AD","J4","H2"))))
+    dplyr::filter(provider_name != "Borders" |
+                    (provider_name == "Borders" &
+                       !(specialty_code %in% c("AD","J4","H2"))))
 
 }
 
 f_lothian_small_specs <- function(df) {
 
   df <- df |>
-    filter((nhs_board_of_sending_location_name == "NHS LOTHIAN" &
-              !(specialty_code %in% c("D1","D2","D3",
-                                      "D4","D5","D6",
-                                      "D61","D62","D63",
-                                      "D7","D8","D9",
-                                      "DA","DB","DC",
-                                      "DD","DE")) &
-              patient_type_code == "21" &
-              date_lothian_small >= as.Date("2019-10-01") &
-              date_lothian_small <= as.Date("2020-03-31")) |
+    dplyr::filter((nhs_board_of_sending_location_name == "NHS LOTHIAN" &
+                     !(specialty_code %in% c("D1","D2","D3",
+                                             "D4","D5","D6",
+                                             "D61","D62","D63",
+                                             "D7","D8","D9",
+                                             "DA","DB","DC",
+                                             "DD","DE")) &
+                     patient_type_code == "21" &
+                     date_lothian_small >= as.Date("2019-10-01") &
+                     date_lothian_small <= as.Date("2020-03-31")) |
 
-             (nhs_board_of_sending_location_name == "NHS LOTHIAN" &
-                (patient_type_code %in% c("01","11")  |
-                   date_lothian_small < as.Date("2019-10-01") |
-                   date_lothian_small > as.Date("2020-03-31"))) |
+                    (nhs_board_of_sending_location_name == "NHS LOTHIAN" &
+                       (patient_type_code %in% c("01","11")  |
+                          date_lothian_small < as.Date("2019-10-01") |
+                          date_lothian_small > as.Date("2020-03-31"))) |
 
-             nhs_board_of_sending_location_name != "NHS LOTHIAN")
+                    nhs_board_of_sending_location_name != "NHS LOTHIAN")
 
 }
 
 fp_completed_nop <- function() {
-  expr(
+  rlang::expr(
     patient_type_cohort == "New Outpatient" &
       date_of_referral_receipt >= as.Date("2009-04-01") &
       web_flag == "Y" &
@@ -45,7 +45,7 @@ fp_completed_nop <- function() {
 }
 
 fp_ongoing_nop <- function() {
-  expr(
+  rlang::expr(
     patient_type_cohort == "New Outpatient" &
       !!fp_oph_excl() &
       web_flag == "Y" &
@@ -59,7 +59,7 @@ fp_ongoing_nop <- function() {
 }
 
 fp_add_rem_nop <- function() {
-  expr(
+  rlang::expr(
     patient_type_cohort == "New Outpatient" &
       date_of_referral_receipt >= as.Date("2009-04-01") &
       web_flag == "Y" &
@@ -72,7 +72,7 @@ fp_add_rem_nop <- function() {
 }
 
 fp_completed_ipdc <- function() {
-  expr(
+  rlang::expr(
     patient_type_cohort == "Inpatient/Day case" &
       date_of_wait_initial_start >= as.Date("2012-10-01") &
       !(patient_category_code %in% c("2","7","8")) &
@@ -82,7 +82,7 @@ fp_completed_ipdc <- function() {
 }
 
 fp_ongoing_ipdc <- function() {
-  expr(
+  rlang::expr(
     patient_type_cohort == "Inpatient/Day case" &
       date_of_wait_initial_start >= as.Date("2012-10-01") &
       !(patient_category_code %in% c("2","7","8")) &
@@ -96,14 +96,14 @@ fp_add_rem_ipdc <- function() {
 }
 
 fp_nop_small_specs <- function() {
-  expr(
+  rlang::expr(
     !(specialty_code %in% c("AC","AJ","RU5",
                             "RU6","RU7","RU8"))
   )
 }
 
 fp_nop_wts <- function() {
-  expr(
+  rlang::expr(
     ((waiting_time_standard_code != "050" &
         date_of_wait_initial_start >= as.Date("2019-10-01")) |
        date_of_wait_initial_start < as.Date("2019-10-01"))
@@ -111,7 +111,7 @@ fp_nop_wts <- function() {
 }
 
 fp_ipdc_wts <- function() {
-  expr(
+  rlang::expr(
     (!(waiting_time_standard_code %in% c("050","051","052")) |
 
        (waiting_time_standard_code != "074" &
@@ -124,7 +124,7 @@ fp_ipdc_wts <- function() {
 }
 
 fp_nop_completed_old_referral_sources <- function() {
-  expr(
+  rlang::expr(
     ((date_of_removal_from_list < as.Date("2012-10-01") &
         (waiting_time_standard_code != "021" |
            !(referral_source_code %in% c("1","D","0"))) &
@@ -135,7 +135,7 @@ fp_nop_completed_old_referral_sources <- function() {
 }
 
 fp_oph_excl <- function() {
-  expr(
+  rlang::expr(
     !(date_of_report >= as.Date("2023-10-01") &
         specialty_code == "C7" &
         transfer_flag == "Y")
@@ -143,7 +143,7 @@ fp_oph_excl <- function() {
 }
 
 fp_nop_ongoing_old_referral_sources <- function() {
-  expr(
+  rlang::expr(
     ((date_of_report < as.Date("2012-10-01") &
         (waiting_time_standard_code != "021" |
            !(referral_source_code %in% c("1","D","0"))) &

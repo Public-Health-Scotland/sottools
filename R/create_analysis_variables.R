@@ -1,3 +1,4 @@
+#' @export
 create_analysis_variables <- function(df, table) {
   df <- df |>
     c_month_end_date(wh_table = table) |>

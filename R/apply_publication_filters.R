@@ -1,7 +1,8 @@
+#' @export
 apply_publication_filters <- function(df, table) {
 
   df <- df |>
-    filter(active_deleted_record_status == "A",
+    dplyr::filter(active_deleted_record_status == "A",
            sending_location_code != "S206H",
            patient_type_code %in% c("21","11","01"),
            wait_error_flag_code %in% c(0,1),
@@ -12,28 +13,28 @@ apply_publication_filters <- function(df, table) {
 
   if (table == "completed") {
     df <- df |>
-      filter(attended_admitted_flag == "Y") |>
-      mutate(date_lothian_small = date_of_wait_initial_start) |>
+      dplyr::filter(attended_admitted_flag == "Y") |>
+      dplyr::mutate(date_lothian_small = date_of_wait_initial_start) |>
       f_lothian_small_specs() |>
-      filter(!!fp_completed_nop() |
+      dplyr::filter(!!fp_completed_nop() |
                !!fp_completed_ipdc())
   } else if (table == "ongoing") {
     df <- df |>
-      mutate(date_lothian_small = date_of_report) |>
+      dplyr::mutate(date_lothian_small = date_of_report) |>
       f_lothian_small_specs() |>
-      filter(!!fp_ongoing_nop() |
+      dplyr::filter(!!fp_ongoing_nop() |
                !!fp_ongoing_ipdc())
   } else if (table == "additions") {
     df <- df |>
-      mutate(date_lothian_small = date_of_wait_initial_start) |>
+      dplyr::mutate(date_lothian_small = date_of_wait_initial_start) |>
       f_lothian_small_specs() |>
-      filter(!!fp_add_rem_nop() |
+      dplyr::filter(!!fp_add_rem_nop() |
                !!fp_add_rem_ipdc())
   } else if (table == "removals") {
     df <- df |>
-      mutate(date_lothian_small = date_of_removal_from_list) |>
+      dplyr::mutate(date_lothian_small = date_of_removal_from_list) |>
       f_lothian_small_specs() |>
-      filter(!!fp_add_rem_nop() |
+      dplyr::filter(!!fp_add_rem_nop() |
                !!fp_add_rem_ipdc())
   }
 
