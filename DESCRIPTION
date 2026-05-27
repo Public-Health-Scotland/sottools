@@ -18,6 +18,7 @@ Suggests:
     DT,
     htmltools,
     keyring,
+    lubridate,
     odbc,
     testthat (>= 3.0.0),
     withr
