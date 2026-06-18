@@ -64,7 +64,6 @@ fp_add_rem_nop <- function() {
       date_of_referral_receipt >= as.Date("2009-04-01") &
       web_flag == "Y" &
       scottish_resident_flag == "Y" &
-      !(removal_reason_code %in% c("50","51","59")) &
       !(waiting_time_standard_code %in% c("074","075","060")) &
       !!fp_nop_small_specs() &
       !!fp_nop_wts()
@@ -114,11 +113,11 @@ fp_ipdc_wts <- function() {
   rlang::expr(
     (!(waiting_time_standard_code %in% c("050","051","052")) |
 
-       (waiting_time_standard_code != "074" &
+       (!(waiting_time_standard_code %in% c("050","051","052","074")) &
           date_of_wait_initial_start <= as.Date("2014-09-30") &
           date_of_wait_initial_start >= as.Date("2014-04-01")) |
 
-       (!(waiting_time_standard_code %in% c("074","075")) &
+       (!(waiting_time_standard_code %in% c("050","051","052","074","075")) &
           date_of_wait_initial_start < as.Date("2014-04-01")))
   )
 }
