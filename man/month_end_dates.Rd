@@ -21,5 +21,5 @@ Get a vector of month-end dates
 }
 \examples{
 month_end_dates(as.Date("2024-01-01"), as.Date("2025-01-01"))
-month_end_dates(lubridate::dmy("01-03-2026"), n_months = 12)
+month_end_dates(lubridate::dmy("31-03-2026"), n_months = 12)
 }
