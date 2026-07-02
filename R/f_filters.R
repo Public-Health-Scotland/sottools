@@ -111,7 +111,8 @@ fp_nop_wts <- function() {
 
 fp_ipdc_wts <- function() {
   rlang::expr(
-    (!(waiting_time_standard_code %in% c("050","051","052")) |
+    ((!(waiting_time_standard_code %in% c("050","051","052")) &
+       date_of_wait_initial_start >= as.Date("2014-10-01")) |
 
        (!(waiting_time_standard_code %in% c("050","051","052","074")) &
           date_of_wait_initial_start <= as.Date("2014-09-30") &
