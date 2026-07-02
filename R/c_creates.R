@@ -12,14 +12,11 @@ c_patient_type_cohort <- function(df) {
 
 }
 
-c_grouped_specialty <- function(df) {
+c_grouped_specialty_desc <- function(df) {
 
   df <- df |>
     dplyr::mutate(
-      specialty_code = dplyr::if_else(is.na(specialty_code),
-                               "BLANK",
-                               specialty_code),
-      specialty = dplyr::case_when(
+      grouped_specialty_desc = dplyr::case_when(
         substr(specialty_code,1,2) == "A1" ~ "GENERAL MEDICINE",
         substr(specialty_code,1,2) == "A8" ~ "ENDOCRINOLOGY & DIABETES",
         substr(specialty_code,1,2) == "C1" ~ "GENERAL SURGERY",
@@ -43,8 +40,6 @@ c_grouped_specialty <- function(df) {
         substr(specialty_code,1,2) == "C9" ~ "PLASTIC SURGERY",
         TRUE ~ specialty_desc
       ))
-
-  df
 
 }
 

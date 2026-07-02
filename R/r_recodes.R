@@ -36,6 +36,16 @@ r_nhs_board_of_treatment_name <- function(df, wh_table) {
   df
 }
 
+r_specialty_code <- function(df) {
+
+  df <- df |>
+    dplyr::mutate(
+      specialty_code = dplyr::if_else(is.na(specialty_code),
+                                      "BLANK",
+                                      specialty_code))
+
+}
+
 r_waiting_time_standard_code <- function(df) {
 
   df <- df |>
