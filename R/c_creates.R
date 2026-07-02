@@ -45,10 +45,7 @@ c_grouped_specialty_desc <- function(df) {
 
 c_month_end_date <- function(df, wh_table) {
 
-  if (wh_table == "ongoing") {
-    df <- df |>
-      dplyr::mutate(month_end_date = date_of_report)
-  } else if (wh_table == "completed" | wh_table == "removals") {
+  if (wh_table == "completed" | wh_table == "removals") {
     df <- df |>
       dplyr::mutate(month_end_date = substr(date_of_removal_from_list,1,7))
   } else if (wh_table == "additions") {
