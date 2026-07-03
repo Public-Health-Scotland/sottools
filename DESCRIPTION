@@ -16,6 +16,7 @@ Imports:
 Suggests: 
     DBI,
     DT,
+    duckdb,
     htmltools,
     keyring,
     lubridate,
