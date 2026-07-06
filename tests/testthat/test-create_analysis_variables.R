@@ -1,3 +1,4 @@
+# Parameter validation tests
 test_that("create_analysis_variables() insists on a dv_platform connection", {
   fake_wh_tbl <- data.frame(non_lazy_data = c(1,2,3))
   expect_error(create_analysis_variables(fake_wh_tbl,

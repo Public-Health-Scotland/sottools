@@ -62,12 +62,13 @@ r_wait_days <- function(wh_tbl, pub_table) {
   if (pub_table == "ongoing") {
     wh_tbl <- wh_tbl |>
       dplyr::rename(wait_days = wait_days_at_report_date)
+  } else if (pub_table == "completed") {
+    wh_tbl <- wh_tbl |>
+      dplyr::mutate(wait_days = dplyr::if_else(patient_type_cohort == "Inpatient/Day case" &
+                                                 waiting_time_standard_code == "023",
+                                               0, wait_days))
   }
 
-  wh_tbl <- wh_tbl |>
-    dplyr::mutate(wait_days = dplyr::if_else(pub_table == "completed" &
-                                        patient_type_cohort == "Inpatient/Day case" &
-                                        waiting_time_standard_code == "023",
-                                      0, wait_days))
+  wh_tbl
 
 }
