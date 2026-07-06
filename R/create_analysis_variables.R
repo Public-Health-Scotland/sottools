@@ -25,7 +25,7 @@ create_analysis_variables <- function(wh_tbl, pub_table) {
     cli::cli_abort(
       "{.arg wh_tbl} must be a lazy_tbl pointing to a warehouse view which
       you can get as the output of `get_wh_tbl()`.",
-      class = "wh_object_check"
+      class = "tbl_lazy_check"
     )
   }
   if (missing(pub_table)) {

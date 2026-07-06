@@ -31,7 +31,7 @@ apply_publication_filters <- function(wh_tbl, pub_table) {
       "{.arg wh_tbl} must be a lazy_tbl pointing to a warehouse view which
       you can get as the output of `get_wh_tbl()` followed by
       `create_analysis_variables()`.",
-      class = "wh_object_check"
+      class = "tbl_lazy_check"
     )
   }
   if (missing(pub_table)) {
