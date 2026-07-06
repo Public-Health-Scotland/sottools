@@ -18,7 +18,35 @@
 #'
 #' @export
 apply_publication_filters <- function(wh_tbl, pub_table) {
-
+  # pararmeter validation
+  if (missing(wh_tbl)) {
+    cli::cli_abort(
+      "Please pass a lazy_tbl pointing to a warehouse view as the
+      {.arg wh_tbl} argument.",
+      class = "missing_arg"
+    )
+  }
+  if (!(inherits(wh_tbl, "tbl_lazy"))) {
+    cli::cli_abort(
+      "{.arg wh_tbl} must be a lazy_tbl pointing to a warehouse view which
+      you can get as the output of `get_wh_tbl()` followed by
+      `create_analysis_variables()`.",
+      class = "wh_object_check"
+    )
+  }
+  if (missing(pub_table)) {
+    cli::cli_abort(
+      "{.arg pub_table} is missing with no default.",
+      class = "missing_arg"
+    )
+  }
+  if (!(pub_table %in% c("completed", "ongoing", "additions", "removals"))) {
+    cli::cli_abort(
+      "{.arg pub_table} must be one of \"completed\", \"ongoing\"
+      \"additions\" or \"removals\".",
+      class = "invalid_arg"
+    )
+  }
   wh_tbl <- wh_tbl |>
     dplyr::filter(active_deleted_record_status == "A",
            sending_location_code != "S206H",
