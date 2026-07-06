@@ -1,6 +1,6 @@
-c_patient_type_cohort <- function(df) {
+c_patient_type_cohort <- function(wh_tbl) {
 
-  df <- df |>
+  wh_tbl <- wh_tbl |>
     dplyr::mutate(patient_type_cohort = dplyr::case_when(
       patient_type_code == "21" ~ "New Outpatient",
       patient_type_code %in% c("01", "11") ~ "Inpatient/Day case",
@@ -8,13 +8,13 @@ c_patient_type_cohort <- function(df) {
       TRUE ~ NA
     ))
 
-  df
+  wh_tbl
 
 }
 
-c_grouped_specialty_desc <- function(df) {
+c_grouped_specialty_desc <- function(wh_tbl) {
 
-  df <- df |>
+  wh_tbl <- wh_tbl |>
     dplyr::mutate(
       grouped_specialty_desc = dplyr::case_when(
         substr(specialty_code,1,2) == "A1" ~ "GENERAL MEDICINE",
@@ -43,16 +43,16 @@ c_grouped_specialty_desc <- function(df) {
 
 }
 
-c_month_end_date <- function(df, wh_table) {
+c_month_end_date <- function(wh_tbl, pub_table) {
 
-  if (wh_table == "completed" | wh_table == "removals") {
-    df <- df |>
+  if (pub_table == "completed" | pub_table == "removals") {
+    wh_tbl <- wh_tbl |>
       dplyr::mutate(month_end_date = substr(date_of_removal_from_list,1,7))
-  } else if (wh_table == "additions") {
-    df <- df |>
+  } else if (pub_table == "additions") {
+    wh_tbl <- wh_tbl |>
       dplyr::mutate(month_end_date = substr(date_of_wait_initial_start,1,7))
   }
 
-  df
+  wh_tbl
 
 }
