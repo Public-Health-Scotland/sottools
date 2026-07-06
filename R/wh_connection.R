@@ -1,4 +1,7 @@
-#' wh_connection
+#' Connect to the warehouse
+#'
+#' `wh_connection()` extablishes a database connection object for the
+#' national waiting times data mart.
 #'
 #' @returns A DVPROD connection object
 #' @export

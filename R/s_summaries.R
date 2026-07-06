@@ -8,14 +8,14 @@
 #' - Median wait
 #' - 90th percentile wait
 #'
-#' @param df A `lazy_tbl` object referring to either the ongoing
+#' @param wh_tbl A `lazy_tbl` object referring to either the ongoing
 #' or completed warehouse view. This can be either grouped or ungrouped.
 #'
 #' @returns A lazy_tbl object containing the summary stats
 #' @export
-s_performance <- function(df) {
+s_performance <- function(wh_tbl) {
 
-  df <- df |>
+  wh_tbl <- wh_tbl |>
     dplyr::summarise(waits = dplyr::n(),
                      over_12_weeks = sum(dplyr::if_else(wait_days > 84, 1, 0), na.rm = TRUE),
                      over_16_weeks = sum(dplyr::if_else(wait_days > 112, 1, 0), na.rm = TRUE),

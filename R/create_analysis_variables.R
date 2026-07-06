@@ -4,49 +4,49 @@
 #' required for analysis. This function derives the variables required for
 #' further analysis.
 #'
-#' @param df A lazy_tbl object representing a warehouse table. This should
+#' @param wh_tbl A lazy_tbl object representing a warehouse table. This should
 #' be the output of `get_wh_tbl()`
-#' @param table One of "completed", "ongoing", "additions", "removals" to
+#' @param pub_table One of "completed", "ongoing", "additions", "removals" to
 #' tell the function what data is being looked at and therefore what variables
 #' to derive.
 #'
 #' @returns lazy_tbl object with the derived variables added.
 #' @export
-create_analysis_variables <- function(df, table) {
+create_analysis_variables <- function(wh_tbl, pub_table) {
   # pararmeter validation
-  if (missing(df)) {
+  if (missing(wh_tbl)) {
     cli::cli_abort(
       "Please pass a lazy_tbl pointing to a warehouse view as the
-      {.arg df} argument.",
+      {.arg wh_tbl} argument.",
       class = "missing_arg"
     )
   }
-  if (!(inherits(df, "tbl_lazy"))) {
+  if (!(inherits(wh_tbl, "tbl_lazy"))) {
     cli::cli_abort(
-      "{.arg df} must be a lazy_tbl pointing to a warehouse view which
+      "{.arg wh_tbl} must be a lazy_tbl pointing to a warehouse view which
       you can get as the output of `get_wh_tbl()`.",
       class = "wh_object_check"
     )
   }
-  if (missing(table)) {
+  if (missing(pub_table)) {
     cli::cli_abort(
-      "{.arg table} is missing with no default.",
+      "{.arg pub_table} is missing with no default.",
       class = "missing_arg"
     )
   }
-  if (!(table %in% c("completed", "ongoing", "additions", "removals"))) {
+  if (!(pub_table %in% c("completed", "ongoing", "additions", "removals"))) {
     cli::cli_abort(
-      "{.arg datatype} must be one of \"completed\", \"ongoing\"
+      "{.arg pub_table} must be one of \"completed\", \"ongoing\"
       \"additions\" or \"removals\".",
       class = "invalid_arg"
     )
   }
-  df <- df |>
-    c_month_end_date(wh_table = table) |>
+  wh_tbl <- wh_tbl |>
+    c_month_end_date(pub_table = pub_table) |>
     r_specialty_code() |>
     c_grouped_specialty_desc() |>
     c_patient_type_cohort() |>
-    r_nhs_board_of_treatment_name(table) |>
+    r_nhs_board_of_treatment_name(pub_table = pub_table) |>
     r_waiting_time_standard_code() |>
-    r_wait_days(wh_table = table)
+    r_wait_days(pub_table = pub_table)
 }

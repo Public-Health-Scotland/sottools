@@ -1,8 +1,8 @@
 #' Get a lazy_tbl object from the warehouse
 #'
 #' @param con The dv_platform connection object
-#' @param datatype A character vector specifying "SSQ", "SSM" or "LIVE"clasdfasdfasdf
-#' @param wh_table One of "ongoing", "completed", "offers", "unavailability", "snapshot_details"
+#' @param snapshot_live A character vector specifying "SSQ", "SSM" or "LIVE"
+#' @param view One of "ongoing", "completed", "offers", "unavailability", "snapshot_details"
 #'
 #' @returns A lazy_tbl object representing the warehouse table
 #' @export
@@ -15,10 +15,10 @@
 #'   uid = "tunwdev01",
 #'   pwd = keyring::key_get("tunwdev01_pass")
 #' )
-#' test <- get_wh_tbl(con, datatype = "SSM", wh_table = "ongoing")
+#' test <- get_wh_tbl(con, snapshot_live = "SSM", view = "ongoing")
 get_wh_tbl <- function(con,
-                       datatype = "SSM",
-                       wh_table = "ongoing") {
+                       snapshot_live = "SSM",
+                       view = "ongoing") {
   # Parameter Validation
   if (!(inherits(con, "PostgreSQL") & con@info[1]$dbname == "dv_platform") &
       !inherits(con, "SQLiteConnection")) {
@@ -27,48 +27,48 @@ get_wh_tbl <- function(con,
       class = "wh_object_check"
     )
   }
-  if (missing(datatype) & wh_table != "snapshot_details") {
+  if (missing(snapshot_live) & view != "snapshot_details") {
     cli::cli_abort(
-      "{.arg datatype} is missing with no default.",
+      "{.arg snapshot_live} is missing with no default.",
       class = "missing_arg"
     )
   }
-  if (missing(wh_table)) {
+  if (missing(view)) {
     cli::cli_abort(
-      "{.arg wh_table} is missing with no default.",
+      "{.arg view} is missing with no default.",
       class = "missing_arg"
     )
   }
-  if (!(datatype %in% c("SSM", "SSQ", "LIVE")) & wh_table != "snapshot_details") {
+  if (!(snapshot_live %in% c("SSM", "SSQ", "LIVE")) & view != "snapshot_details") {
     cli::cli_abort(
-      "{.arg datatype} must be one of \"SSM\", \"SSQ\" or \"LIVE\".",
+      "{.arg snapshot_live} must be one of \"SSM\", \"SSQ\" or \"LIVE\".",
       class = "invalid_arg"
     )
   }
-  if (!(wh_table %in% c("ongoing", "completed", "offers", "unavailability", "snapshot_details"))) {
+  if (!(view %in% c("ongoing", "completed", "offers", "unavailability", "snapshot_details"))) {
     cli::cli_abort(
-      "{.arg wh_table} must be one of \"ongoing\", \"completed\", \"offers\", \"unavailability\" or \"snapshot_details\".",
+      "{.arg view} must be one of \"ongoing\", \"completed\", \"offers\", \"unavailability\" or \"snapshot_details\".",
       class = "invalid_arg"
     )
   }
   # warehouse table selection
   sql_table <- dplyr::case_when(
-    wh_table == "ongoing" ~ "waiting_times_at_report_date",
-    wh_table == "completed" ~ "waiting_times_list",
-    wh_table == "offers" ~ "waiting_times_appt_offer",
-    wh_table == "unavailability" ~ "waiting_times_unavailability",
-    wh_table == "snapshot_details" ~ "snapshot_details"
+    view == "ongoing" ~ "waiting_times_at_report_date",
+    view == "completed" ~ "waiting_times_list",
+    view == "offers" ~ "waiting_times_appt_offer",
+    view == "unavailability" ~ "waiting_times_unavailability",
+    view == "snapshot_details" ~ "snapshot_details"
   )
   # assemble the query text
   sql_query <- dplyr::case_when(
-    wh_table == "ongoing" ~ paste0(
+    view == "ongoing" ~ paste0(
       "SELECT * FROM waiting_times.waiting_times_at_report_date WHERE datatype = '",
-      datatype,
+      snapshot_live,
       "' AND dataset = '",
       "SOT",
       "' AND date_of_report_start='1000-01-01' AND date_of_report_end='3000-01-01'"
     ),
-    wh_table %in% c(
+    view %in% c(
       "completed",
       "offers",
       "unavailability"
@@ -76,10 +76,10 @@ get_wh_tbl <- function(con,
       "SELECT * FROM waiting_times.",
       sql_table,
       " WHERE datatype = '",
-      datatype,
+      snapshot_live,
       "' AND dataset = 'SOT'"
     ),
-    wh_table == "snapshot_details" ~ "SELECT * FROM waiting_times.snapshot_details"
+    view == "snapshot_details" ~ "SELECT * FROM waiting_times.snapshot_details"
   )
   # create lazy_tbl
   tbl <- dplyr::tbl(con, dbplyr::sql(sql_query))

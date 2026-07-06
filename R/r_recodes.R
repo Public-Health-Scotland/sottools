@@ -1,6 +1,6 @@
-r_nhs_board_of_treatment_name <- function(df, wh_table) {
+r_nhs_board_of_treatment_name <- function(wh_tbl, pub_table) {
 
-  df <- df |>
+  wh_tbl <- wh_tbl |>
     dplyr::mutate(nhs_board_of_treatment_name = dplyr::case_when(
       nhs_board_of_treatment_name == "ENGLAND/WALES/NORTHERN IRELAND" ~ "Outside Scotland",
       nhs_board_of_treatment_name == "NATIONAL FACILITY" ~ "NHS Golden Jubilee",
@@ -23,8 +23,8 @@ r_nhs_board_of_treatment_name <- function(df, wh_table) {
       TRUE ~ "Not known"
     ))
 
-  if (wh_table == "ongoing") {
-    df <- df |>
+  if (pub_table == "ongoing") {
+    wh_tbl <- wh_tbl |>
       dplyr::mutate(nhs_board_of_treatment_name = dplyr::case_when(
         nhs_board_of_treatment_name == "NHS Forth Valley" &
           specialty_code == "A7" &
@@ -33,12 +33,12 @@ r_nhs_board_of_treatment_name <- function(df, wh_table) {
       ))
   }
 
-  df
+  wh_tbl
 }
 
-r_specialty_code <- function(df) {
+r_specialty_code <- function(wh_tbl) {
 
-  df <- df |>
+  wh_tbl <- wh_tbl |>
     dplyr::mutate(
       specialty_code = dplyr::if_else(is.na(specialty_code),
                                       "BLANK",
@@ -46,26 +46,26 @@ r_specialty_code <- function(df) {
 
 }
 
-r_waiting_time_standard_code <- function(df) {
+r_waiting_time_standard_code <- function(wh_tbl) {
 
-  df <- df |>
+  wh_tbl <- wh_tbl |>
     dplyr::mutate(waiting_time_standard_code = dplyr::if_else(is.na(waiting_time_standard_code),
                                                        "000",
                                                        waiting_time_standard_code))
 
-  df
+  wh_tbl
 
 }
 
-r_wait_days <- function(df, wh_table) {
+r_wait_days <- function(wh_tbl, pub_table) {
 
-  if (wh_table == "ongoing") {
-    df <- df |>
+  if (pub_table == "ongoing") {
+    wh_tbl <- wh_tbl |>
       dplyr::rename(wait_days = wait_days_at_report_date)
   }
 
-  df <- df |>
-    dplyr::mutate(wait_days = dplyr::if_else(wh_table == "completed" &
+  wh_tbl <- wh_tbl |>
+    dplyr::mutate(wait_days = dplyr::if_else(pub_table == "completed" &
                                         patient_type_cohort == "Inpatient/Day case" &
                                         waiting_time_standard_code == "023",
                                       0, wait_days))

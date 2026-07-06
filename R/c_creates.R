@@ -52,4 +52,7 @@ c_month_end_date <- function(df, wh_table) {
     df <- df |>
       dplyr::mutate(month_end_date = substr(date_of_wait_initial_start,1,7))
   }
+
+  df
+
 }
