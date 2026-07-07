@@ -4,13 +4,13 @@
 \alias{create_analysis_variables}
 \title{Create derived variables}
 \usage{
-create_analysis_variables(df, table)
+create_analysis_variables(wh_tbl, pub_table)
 }
 \arguments{
-\item{df}{A lazy_tbl object representing a warehouse table. This should
+\item{wh_tbl}{A lazy_tbl object representing a warehouse table. This should
 be the output of \code{get_wh_tbl()}}
 
-\item{table}{One of "completed", "ongoing", "additions", "removals" to
+\item{pub_table}{One of "completed", "ongoing", "additions", "removals" to
 tell the function what data is being looked at and therefore what variables
 to derive.}
 }
@@ -22,7 +22,3 @@ There are some variables beyond those in the warehouse views which are
 required for analysis. This function derives the variables required for
 further analysis.
 }
-\section{Details}{
-Some details
-}
-

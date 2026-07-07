@@ -4,14 +4,14 @@
 \alias{get_wh_tbl}
 \title{Get a lazy_tbl object from the warehouse}
 \usage{
-get_wh_tbl(con, datatype = "SSM", wh_table = "ongoing")
+get_wh_tbl(con, snapshot_live = "SSM", view = "ongoing")
 }
 \arguments{
 \item{con}{The dv_platform connection object}
 
-\item{datatype}{A character vector specifying "SSQ", "SSM" or "LIVE"clasdfasdfasdf}
+\item{snapshot_live}{A character vector specifying "SSQ", "SSM" or "LIVE"}
 
-\item{wh_table}{One of "ongoing", "completed", "offers", "unavailability", "snapshot_details"}
+\item{view}{One of "ongoing", "completed", "offers", "unavailability", "snapshot_details"}
 }
 \value{
 A lazy_tbl object representing the warehouse table
@@ -27,5 +27,5 @@ con <- DBI::dbConnect(odbc::odbc(),
   uid = "tunwdev01",
   pwd = keyring::key_get("tunwdev01_pass")
 )
-test <- get_wh_tbl(con, datatype = "SSM", wh_table = "ongoing")
+test <- get_wh_tbl(con, snapshot_live = "SSM", view = "ongoing")
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/wh_connection.R
 \name{wh_connection}
 \alias{wh_connection}
-\title{wh_connection}
+\title{Connect to the warehouse}
 \usage{
 wh_connection()
 }
@@ -10,7 +10,8 @@ wh_connection()
 A DVPROD connection object
 }
 \description{
-wh_connection
+\code{wh_connection()} extablishes a database connection object for the
+national waiting times data mart.
 }
 \examples{
 con <- wh_connection()

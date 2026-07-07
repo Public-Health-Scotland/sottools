@@ -4,14 +4,14 @@
 \alias{apply_publication_filters}
 \title{Filter out records not reported on in the SoT publication}
 \usage{
-apply_publication_filters(df, table)
+apply_publication_filters(wh_tbl, pub_table)
 }
 \arguments{
-\item{df}{A lazy_tbl object represenging a warehouse table. This object
+\item{wh_tbl}{A lazy_tbl object represenging a warehouse table. This object
 needs to come from running the function \code{get_wh_tbl()} and then
 \code{create_analysis_variables()} on the resulting object.}
 
-\item{table}{One of "completed", "ongoing", "additions", "removals" to
+\item{pub_table}{One of "completed", "ongoing", "additions", "removals" to
 tell the function what data is being looked at and therefore what filters
 to apply.}
 }

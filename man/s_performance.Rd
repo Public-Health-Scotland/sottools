@@ -4,10 +4,10 @@
 \alias{s_performance}
 \title{Create Performance Summary Table}
 \usage{
-s_performance(df)
+s_performance(wh_tbl)
 }
 \arguments{
-\item{df}{A \code{lazy_tbl} object referring to either the ongoing
+\item{wh_tbl}{A \code{lazy_tbl} object referring to either the ongoing
 or completed warehouse view. This can be either grouped or ungrouped.}
 }
 \value{
