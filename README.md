@@ -48,4 +48,4 @@ comp_m |>
 ```
 
 A more extensive guide to using sottools to query the warehouse can be
-found in
+found in `vignette("sottools")`

@@ -45,5 +45,4 @@ comp_m |>
   collect()
 ```
 
-A more extensive guide to using sottools to query the warehouse can be found in 
-
+A more extensive guide to using sottools to query the warehouse can be found in `vignette("sottools")`
