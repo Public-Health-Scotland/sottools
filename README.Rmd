@@ -28,6 +28,10 @@ Execute the below code in the console to install sottools:
 remotes::install_git("https://phs-git.nhsnss.scot.nhs.uk/Resources/sottools.git", dependencies = TRUE, build_vignettes = TRUE)
 ```
 
+## Registering Credentials
+
+To connect with the waiting times warehouse using this package you will need to set up a keyring to store your LDAP password. Instructions for doing so can be found in `vignette("wh_credentials")`.
+
 ## Example
 
 This is a very basic example of retrieving data from the warehouse:

@@ -42,6 +42,8 @@ Below is a rough guide to the typical steps required to query the warehouse usin
 
 To get data from the waiting times warehouse a connection object must first be created. The database connection is established in the same way as a connection to SMRA but with sottools the function `wh_connection()` can be used:
 
+If you haven't already done so, you will need to register your LDAP username and password for `wh_connection()` to work. Instructions on how to do this can be found in `vignette("wh_credentials")`.
+
 ```{r, message = FALSE}
 library(sottools)
 library(dplyr)
