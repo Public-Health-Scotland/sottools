@@ -14,8 +14,86 @@ knitr::opts_chunk$set(
 )
 ```
 
-This vignette contains a bit of an overview of using sottools to retrieve data from the national waiting times data mart. The first thing you need to do is to install and load sottools:
+This vignette contains a bit of an overview of using sottools to retrieve data from the waiting times data mart.
 
-```{r setup}
+## Background
+
+sottools uses dbplyr to translate dplyr verbs into SQL. It then uses the resulting queries to retrieve data from the waiting times data mart. The main advantages of this approach are:
+
+1. Commonly used query fragments such as derived variables and publication filters can be wrapped in sottools functions to reduce the amount of code which needs to be written for each new warehouse query.
+2. Queries can be more easily extended by the analyst based on the requirements of the task at hand by adding additional dplyr verbs to the query before sending to the warehouse.
+
+Constructing a query with dbplyr and sottools looks very similar to performing standard data manipulation on a locally loaded dataset. The difference is that instead of each operation being applied to a local dataframe at the time of execution, the operations form elements of a query which is only executed when explicitly requested by the user.
+
+### Data frame vs lazy tibble objects
+
+The difference between these two approaches is captured by the type of objects being operated on. In most cases dplyr functions are supplied a `data.frame` (data held in memory) and they return `data.frame` after the required operations have been performed. If, however, a `tbl_lazy` (lazy tibble) object is supplied dplyr (via dbplyr) constructs an equivalent SQL translation of the dplyr function used and returns a `tbl_lazy` object carrying this SQL information. Unlike when using in-memory data, no actual computation is performed on any data when using lazy tibbles. By passing lazy tibbles representing warehouse views to dplyr functions we can construct database complex database queries including filters, manipulation, aggregation etc.
+
+### `dplyr::collect()` function
+
+Once a query has been constructed using dplyr verbs acting on lazy tibbles the function `dplyr::collect()` is what we use to actually send the query to the database and pull the resulting data into our R session.
+
+## Basic workflow
+
+Below is a rough guide to the typical steps required to query the warehouse using sottools. More detailed documentation for each function can be found in the normal way by running `?function_name` in the console.
+
+### Connecting to the warehouse
+
+To get data from the waiting times warehouse a connection object must first be created. The database connection is established in the same way as a connection to SMRA but with sottools the function `wh_connection()` can be used:
+
+```{r, message = FALSE}
 library(sottools)
+library(dplyr)
+library(odbc)
+con <- wh_connection()
+```
+
+Above we have connected to the warehouse and created a connection object `con` which we will use in subsequent sections.
+
+### Creating a `tbl_lazy` object
+
+Now that we have connected to the warehouse we need to create a lazy tibble object representing one of the views in the warehouse to be used as a starting point for a query. This is done with the `get_wh_tbl()` function.
+
+```{r}
+ongoing <- get_wh_tbl(con = con, snapshot_live = "SSM", view = "ongoing")
+```
+
+We can specify whether we want to look at quarterly snapshot, monthly snapshot or live using the `snapshot_live` argument and the values "SSQ", "SSM" and "LIVE" respectively. And we can specify which view from the warehouse we want using the `view` argument and the values "ongoing", "completed", "offers", "unavailability" and "snapshot_details".
+
+### Deriving variables and applying filters
+
+Now we can start feeding this `tbl_lazy` object into a series of dplyr functions to construct the SQL database query. We first create the common derived variables and apply the queries which define the publication cohort:
+
+```{r}
+ongoing <- ongoing |> 
+  create_analysis_variables(pub_table = "ongoing") |> 
+  apply_publication_filters(pub_table = "ongoing")
+```
+
+The argument specifying the publication table is required as different variables and filters are applied depending on if ongoing waits, completed waits, additions and removals are being looked at.
+
+And now some further manipulation using standard dplyr functions. This query is for the number of onoging NOP waits at the end of May 2026. 
+
+```{r}
+ongoing <- ongoing |> 
+  filter(date_of_report == as.Date("2026-05-31"),
+         patient_type_cohort == "New Outpatient") |> 
+  summarise(
+    waits = n()
+  )
+```
+
+### Collecing data
+
+Now that the query has been constructed the query can be actually sent to the warehouse to retrieve the data:
+
+```{r}
+ongoing |> 
+  collect()
+```
+
+And once everything that's needed has been retrieved the connection can be closed
+
+```{r}
+dbDisconnect(con)
 ```
