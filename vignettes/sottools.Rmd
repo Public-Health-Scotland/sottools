@@ -14,6 +14,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+This vignette contains a bit of an overview of using sottools to retrieve data from the national waiting times data mart. The first thing you need to do is to install and load sottools:
+
 ```{r setup}
 library(sottools)
 ```

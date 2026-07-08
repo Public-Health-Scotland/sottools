@@ -1,20 +1,19 @@
 #' Get a lazy_tbl object from the warehouse
 #'
+#' Once a connection to the waiting times warehouse has been established using
+#' [wh_connection()] this function can be used to create an object which
+#' represents a view from the warehouse.
+#'
 #' @param con The dv_platform connection object
 #' @param snapshot_live A character vector specifying "SSQ", "SSM" or "LIVE"
-#' @param view One of "ongoing", "completed", "offers", "unavailability", "snapshot_details"
+#' @param view One of "ongoing", "completed", "offers", "unavailability",
+#'  "snapshot_details"
 #'
 #' @returns A lazy_tbl object representing the warehouse table
 #' @export
 #'
 #' @examples
-#' keyring::keyring_unlock(password = Sys.getenv("KEYRING_PASS"))
-#'
-#' con <- DBI::dbConnect(odbc::odbc(),
-#'   dsn = "DVPREPROD",
-#'   uid = "tunwdev01",
-#'   pwd = keyring::key_get("tunwdev01_pass")
-#' )
+#' con <- wh_connection()
 #' test <- get_wh_tbl(con, snapshot_live = "SSM", view = "ongoing")
 get_wh_tbl <- function(con,
                        snapshot_live = "SSM",

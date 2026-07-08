@@ -18,37 +18,32 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of sottools is to ...
+This package mostly contains functions to help retrieve data from the national waiting times data mart for further analysis using R.
 
 ## Installation
 
-You can install the development version of sottools like so:
+Execute the below code in the console to install sottools:
 
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+remotes::install_git("https://phs-git.nhsnss.scot.nhs.uk/Angus-Morton/sottools.git")
 ```
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a very basic example of retrieving data from the warehouse:
 
 ```{r example}
 library(sottools)
-## basic example code
+library(dplyr)
+
+con <- wh_connection()
+
+comp_m <- get_wh_tbl(con, "SSM", "completed")
+
+comp_m |> 
+  count() |> 
+  collect()
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+A more extensive guide to using sottools to query the warehouse can be found in 
 
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
