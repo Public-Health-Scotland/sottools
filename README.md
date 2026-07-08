@@ -25,14 +25,6 @@ This is a very basic example of retrieving data from the warehouse:
 ``` r
 library(sottools)
 library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
 
 con <- wh_connection()
 
@@ -41,10 +33,6 @@ comp_m <- get_wh_tbl(con, "SSM", "completed")
 comp_m |> 
   count() |> 
   collect()
-#> # A tibble: 1 × 1
-#>          n
-#>    <int64>
-#> 1 59065586
 ```
 
 A more extensive guide to using sottools to query the warehouse can be
