@@ -1,0 +1,68 @@
+# sottools
+
+This package mostly contains functions to help retrieve data from the
+national waiting times data mart for further analysis using R.
+
+## Installation
+
+Execute the below code in the console to install sottools:
+
+``` r
+
+pak::pak("Public-Health-Scotland/sottools")
+```
+
+## Registering Credentials
+
+To connect with the waiting times warehouse using this package you will
+need to set up a keyring to store your LDAP password. Instructions for
+doing so can be found by running `vignette("wh_credentials")` after
+you’ve installed the package.
+
+## Example
+
+This is a very basic example of retrieving data from the warehouse:
+
+``` r
+
+library(sottools)
+library(dplyr)
+
+con <- wh_connection()
+
+comp_m <- get_wh_tbl(con, "SSM", "completed")
+
+comp_m |> 
+  count() |> 
+  collect()
+```
+
+A more extensive guide to using sottools to query the warehouse can be
+found by running
+[`vignette("sottools")`](https://public-health-scotland.github.io/sottools/articles/sottools.md)
+in the console.
+
+# Package index
+
+## All functions
+
+- [`apply_publication_filters()`](https://public-health-scotland.github.io/sottools/reference/apply_publication_filters.md)
+  : Filter out records not reported on in the SoT publication
+- [`create_analysis_variables()`](https://public-health-scotland.github.io/sottools/reference/create_analysis_variables.md)
+  : Create derived variables
+- [`get_wh_tbl()`](https://public-health-scotland.github.io/sottools/reference/get_wh_tbl.md)
+  : Get a lazy_tbl object from the warehouse
+- [`month_end_dates()`](https://public-health-scotland.github.io/sottools/reference/month_end_dates.md)
+  : Get a vector of month-end dates
+- [`s_performance()`](https://public-health-scotland.github.io/sottools/reference/s_performance.md)
+  : Create Performance Summary Table
+- [`wh_connection()`](https://public-health-scotland.github.io/sottools/reference/wh_connection.md)
+  : Connect to the warehouse
+
+# Articles
+
+### All vignettes
+
+- [sottools](https://public-health-scotland.github.io/sottools/articles/sottools.md):
+- [Store Warehouse
+  Credentials](https://public-health-scotland.github.io/sottools/articles/warehouse-credentials.md):
