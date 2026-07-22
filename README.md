@@ -15,7 +15,7 @@ national waiting times data mart for further analysis using R.
 Execute the below code in the console to install sottools:
 
 ``` r
-remotes::install_git("https://phs-git.nhsnss.scot.nhs.uk/Resources/sottools.git", dependencies = TRUE, build_vignettes = TRUE)
+pak::pak("Public-Health-Scotland/sottools")
 ```
 
 ## Registering Credentials
