@@ -26,6 +26,8 @@ have it already and load it
 ``` r
 
 # Create a keyring called warehouse. You will be promped to set a password.
+# This password can be whatever so make it different to your LDAP.
+# It doesn't need to be memorable as you are about to store it in your .Renviron
 keyring_create("warehouse")
 
 # Add a secret called "LDAP_password" to this keyring. When prompted enter your LDAP password.
