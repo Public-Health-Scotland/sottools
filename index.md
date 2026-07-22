@@ -16,8 +16,8 @@ pak::pak("Public-Health-Scotland/sottools")
 
 To connect with the waiting times warehouse using this package you will
 need to set up a keyring to store your LDAP password. Instructions for
-doing so can be found by running `vignette("wh_credentials")` after
-you’ve installed the package.
+doing so can be found in
+[`vignette("warehouse-credentials")`](https://public-health-scotland.github.io/sottools/articles/warehouse-credentials.md).
 
 ## Example
 
@@ -38,6 +38,5 @@ comp_m |>
 ```
 
 A more extensive guide to using sottools to query the warehouse can be
-found by running
-[`vignette("sottools")`](https://public-health-scotland.github.io/sottools/articles/sottools.md)
-in the console.
+found in
+[`vignette("sottools")`](https://public-health-scotland.github.io/sottools/articles/sottools.md).
