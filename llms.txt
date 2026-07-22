@@ -9,6 +9,8 @@ Execute the below code in the console to install sottools:
 
 ``` r
 
+install.packages("pak")
+library(pak)
 pak::pak("Public-Health-Scotland/sottools")
 ```
 
