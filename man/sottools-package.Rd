@@ -8,6 +8,13 @@
 \description{
 This package mostly contains functions to help retrieve data from the national waiting times data mart for further analysis using R. Most of the functions consist of chunks of dplyr code which is converted to SQL by dbplyr and used to query the data mart.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://public-health-scotland.github.io/sottools/}
+}
+
+}
 \author{
 \strong{Maintainer}: Angus Morton \email{angus.morton@phs.scot}
 
