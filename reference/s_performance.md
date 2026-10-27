@@ -7,7 +7,7 @@ calculates the following summary statistics:
 
 - Number of waits over 12 weeks
 
-- Number of waits over 16 weeks
+- Number of waits over 26 weeks
 
 - Median wait
 
