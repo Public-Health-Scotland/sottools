@@ -70,6 +70,7 @@ fp_add_rem_nop <- function() {
   )
 }
 
+#' @export
 fp_completed_ipdc <- function() {
   rlang::expr(
     patient_type_cohort == "Inpatient/Day case" &

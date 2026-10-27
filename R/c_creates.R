@@ -43,6 +43,11 @@ c_grouped_specialty_desc <- function(wh_tbl) {
 
 }
 
+c_quarter <- function(wh_tbl, pub_table) {
+
+
+}
+
 c_month_end_date <- function(wh_tbl, pub_table) {
 
   if (pub_table == "completed" | pub_table == "removals") {
