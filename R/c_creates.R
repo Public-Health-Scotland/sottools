@@ -43,8 +43,35 @@ c_grouped_specialty_desc <- function(wh_tbl) {
 
 }
 
-c_quarter <- function(wh_tbl, pub_table) {
+c_quarter_end_date <- function(wh_tbl, pub_table) {
 
+  if (pub_table == "completed" | pub_table == "removals") {
+    wh_tbl <- wh_tbl |>
+      dplyr::mutate(
+        quarter_end_year = substr(date_of_removal_from_list,1,5),
+        quarter_end_month = dplyr::case_when(
+          substr(date_of_removal_from_list,6,7) %in% c("01","02","03") ~ "3",
+          substr(date_of_removal_from_list,6,7) %in% c("04","05","06") ~ "6",
+          substr(date_of_removal_from_list,6,7) %in% c("07","08","09") ~ "9",
+          substr(date_of_removal_from_list,6,7) %in% c("10","11","12") ~ "12")
+      ) |>
+      dplyr::mutate(quarter_end_date = sql("CONCAT(quarter_end_year,quarter_end_month)")) |>
+      dplyr::select(-c(quarter_end_year, quarter_end_month))
+  } else if (pub_table == "additions") {
+    wh_tbl <- wh_tbl |>
+      dplyr::mutate(
+        quarter_end_year = substr(date_of_wait_initial_start,1,5),
+        quarter_end_month = dplyr::case_when(
+          substr(date_of_wait_initial_start,6,7) %in% c("01","02","03") ~ "3",
+          substr(date_of_wait_initial_start,6,7) %in% c("04","05","06") ~ "6",
+          substr(date_of_wait_initial_start,6,7) %in% c("07","08","09") ~ "9",
+          substr(date_of_wait_initial_start,6,7) %in% c("10","11","12") ~ "12")
+      ) |>
+      dplyr::mutate(quarter_end_date = sql("CONCAT(quarter_end_year,quarter_end_month)")) |>
+      dplyr::select(-c(quarter_end_year, quarter_end_month))
+  }
+
+  wh_tbl
 
 }
 

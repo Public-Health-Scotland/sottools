@@ -43,6 +43,7 @@ create_analysis_variables <- function(wh_tbl, pub_table) {
   }
   wh_tbl <- wh_tbl |>
     c_month_end_date(pub_table = pub_table) |>
+    c_quarter_end_date(pub_table = pub_table) |>
     r_specialty_code() |>
     c_grouped_specialty_desc() |>
     c_patient_type_cohort() |>
