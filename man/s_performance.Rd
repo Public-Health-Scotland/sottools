@@ -19,7 +19,7 @@ calculates the following summary statistics:
 \itemize{
 \item Number of waits
 \item Number of waits over 12 weeks
-\item Number of waits over 16 weeks
+\item Number of waits over 26 weeks
 \item Median wait
 \item 90th percentile wait
 }
