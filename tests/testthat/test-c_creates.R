@@ -42,4 +42,3 @@ test_that("c_grouped_specialty_desc creates the required variable", {
                  "CLINICAL RADIOLOGY",
                  "PLASTIC SURGERY"))
 })
-

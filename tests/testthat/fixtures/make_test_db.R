@@ -374,7 +374,7 @@ duckdb::dbWriteTable(con,
                      c_patient_type_cohort_df,
                      overwrite = TRUE)
 
-#### c_patient_type_cohort ----
+#### c_grouped_specialty_desc ----
 c_grouped_specialty_desc_df <- data.frame(
   specialty_code = c("A1","A8","C1",
                      "C3","C4","C5",
