@@ -47,6 +47,7 @@ create_analysis_variables <- function(wh_tbl, pub_table) {
     r_specialty_code() |>
     c_grouped_specialty_desc() |>
     c_patient_type_cohort() |>
+    c_grouped_urgency_desc() |>
     r_nhs_board_of_treatment_name(pub_table = pub_table) |>
     r_waiting_time_standard_code() |>
     r_wait_days(pub_table = pub_table)

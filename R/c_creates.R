@@ -41,6 +41,28 @@ c_grouped_specialty_desc <- function(wh_tbl) {
         TRUE ~ specialty_desc
       ))
 
+  wh_tbl
+
+}
+
+c_grouped_urgency_desc <- function(wh_tbl) {
+
+  wh_tbl <- wh_tbl |>
+    dplyr::mutate(
+      grouped_urgency_desc = dplyr::case_when(
+        urgency_category_desc %in% c("Routine",
+                                     "Soon",
+                                     "Priority 3a <12 weeks",
+                                     "Priority 4a >12 weeks") ~ "Routine",
+        urgency_category_desc %in% c("Urgent",
+                                     "Priority 1a <24 hours",
+                                     "Priority 1b <72 hours",
+                                     "Priority 2a <4 weeks") ~ "Urgent",
+        TRUE ~ "Not Known"
+      ))
+
+  wh_tbl
+
 }
 
 c_quarter_end <- function(wh_tbl, pub_table) {
