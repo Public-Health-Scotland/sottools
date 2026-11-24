@@ -2,6 +2,7 @@
 
 export(apply_publication_filters)
 export(create_analysis_variables)
+export(fp_completed_ipdc)
 export(get_wh_tbl)
 export(month_end_dates)
 export(s_performance)

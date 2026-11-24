@@ -374,7 +374,7 @@ duckdb::dbWriteTable(con,
                      c_patient_type_cohort_df,
                      overwrite = TRUE)
 
-#### c_patient_type_cohort ----
+#### c_grouped_specialty_desc ----
 c_grouped_specialty_desc_df <- data.frame(
   specialty_code = c("A1","A8","C1",
                      "C3","C4","C5",
@@ -389,6 +389,18 @@ c_grouped_specialty_desc_df <- data.frame(
 duckdb::dbWriteTable(con,
                      "c_grouped_specialty_desc",
                      c_grouped_specialty_desc_df,
+                     overwrite = TRUE)
+
+#### c_grouped_urgency_desc ----
+c_grouped_urgency_desc_df <- data.frame(
+  urgency_category_desc = c("Priority 1a <24 hours",
+                            "Priority 3a <12 weeks",
+                            NA)
+)
+
+duckdb::dbWriteTable(con,
+                     "c_grouped_urgency_desc",
+                     c_grouped_urgency_desc_df,
                      overwrite = TRUE)
 
 #### r_nhs_board_of_treatment_name ----
