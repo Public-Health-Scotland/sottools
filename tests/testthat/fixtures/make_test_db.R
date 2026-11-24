@@ -391,6 +391,18 @@ duckdb::dbWriteTable(con,
                      c_grouped_specialty_desc_df,
                      overwrite = TRUE)
 
+#### c_grouped_urgency_desc ----
+c_grouped_urgency_desc_df <- data.frame(
+  urgency_category_desc = c("Priority 1a <24 hours",
+                            "Priority 3a <12 weeks",
+                            NA)
+)
+
+duckdb::dbWriteTable(con,
+                     "c_grouped_urgency_desc",
+                     c_grouped_urgency_desc_df,
+                     overwrite = TRUE)
+
 #### r_nhs_board_of_treatment_name ----
 r_nhs_board_of_treatment_name_df <- data.frame(
   nhs_board_of_treatment_name = c("ENGLAND/WALES/NORTHERN IRELAND",

@@ -42,3 +42,16 @@ test_that("c_grouped_specialty_desc creates the required variable", {
                  "CLINICAL RADIOLOGY",
                  "PLASTIC SURGERY"))
 })
+
+test_that("c_grouped_urgency_desc creates the required variable", {
+
+  df <- dplyr::tbl(test_con, "c_grouped_urgency_desc") |>
+    c_grouped_urgency_desc() |>
+    dplyr::collect()
+
+  expect_true("grouped_urgency_desc" %in% names(df))
+  expect_equal(dplyr::pull(df["grouped_urgency_desc"]),
+               c("Urgent",
+                 "Routine",
+                 "Not Known"))
+})
